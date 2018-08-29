@@ -1,0 +1,21 @@
+* {
+    primary-color: #59B55D;
+}
+
+.root {
+    -fx-background-color: #FFFFFF;
+}
+
+.text-field {
+    -fx-focus-color: primary-color;
+    -fx-accent: primary-color;
+}
+
+.button {
+    -fx-focus-color: primary-color;
+}
+
+.progress-bar {
+    -fx-box-border: primary-color;
+    -fx-accent: primary-color;
+}

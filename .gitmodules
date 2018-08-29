@@ -1,0 +1,3 @@
+[submodule "mp3agic"]
+	path = mp3agic
+	url = https://github.com/mpatric/mp3agic
