@@ -437,6 +437,7 @@ public class App extends Application {
                 editPane.setVisible(false);
             } else {
                 editPane.setVisible(true);
+                fileNameField.requestFocus();
                 String fileName = errors.getItems().get(editingSong[0]);
                 try {
                     Mp3File mp3File = new Mp3File(new File(selectedDirectory[0], fileName).toString());
@@ -450,7 +451,12 @@ public class App extends Application {
                     }
                     String artist = tags.getArtist();
                     String title = tags.getTitle();
-                    StringBuilder builder = new StringBuilder(artist).append(" - ").append(title).append(".mp3");
+                    StringBuilder builder = new StringBuilder();
+                    if (artist == null || title == null) {
+                        builder.append(fileName);
+                    } else {
+                        builder.append(artist).append(" - ").append(title).append(".mp3");
+                    }
                     removeColons(builder);
                     suggestedField.setText(builder.toString());
                     suggestedBox.setVisible(!suggestedField.getText().equals(fileName));
@@ -475,6 +481,7 @@ public class App extends Application {
                 editPane.setVisible(false);
             } else {
                 editPane.setVisible(true);
+                fileNameField.requestFocus();
                 String fileName = warnings.getItems().get(editingSong[1]);
                 try {
                     Mp3File mp3File = new Mp3File(new File(selectedDirectory[0], fileName).toString());
@@ -488,7 +495,12 @@ public class App extends Application {
                     }
                     String artist = tags.getArtist();
                     String title = tags.getTitle();
-                    StringBuilder builder = new StringBuilder(artist).append(" - ").append(title).append(".mp3");
+                    StringBuilder builder = new StringBuilder();
+                    if (artist == null || title == null) {
+                        builder.append(fileName);
+                    } else {
+                        builder.append(artist).append(" - ").append(title).append(".mp3");
+                    }
                     removeColons(builder);
                     suggestedField.setText(builder.toString());
                     suggestedBox.setVisible(!suggestedField.getText().equals(fileName));
@@ -555,7 +567,8 @@ public class App extends Application {
                                             Platform.runLater(() -> {
                                                 errors.getItems().add(name);
                                             });
-                                        } else if (name.toLowerCase().contains("lyric") || name.toLowerCase().contains("hq")) {
+                                        } else if (name.toLowerCase().contains("lyric") || name.toLowerCase().contains("hq") ||
+                                                name.toLowerCase().contains("audio") || name.toLowerCase().contains("video")) {
                                             Platform.runLater(() -> {
                                                 warnings.getItems().add(name);
                                             });
@@ -764,6 +777,11 @@ public class App extends Application {
         if (!pair.title.equals(tag.getTitle())) {
             System.out.printf("OT: '%s' ", tag.getTitle());
             tag.setTitle(pair.title);
+            changed = true;
+        }
+        if (tag.getAlbum() != null && !tag.getAlbum().isEmpty()) {
+            System.out.printf("OAlbum: '%s' ", tag.getAlbum());
+            tag.setAlbum(null);
             changed = true;
         }
         if (changed) {
